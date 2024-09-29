@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Günah Çıkarmak İçin Doğru Yerdesiniz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000; /* Arka plan siyah */
+            color: #fff; /* Yazılar beyaz */
+            text-align: center;
+            padding: 50px;
+            height: 100vh; /* Tam ekran yüksekliği */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #00FF00; /* Başlık yeşil */
+        }
+
+        .question {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #FFFFFF; /* Soru beyaz */
+        }
+
+        button {
+            background-color: #00FF00; /* Butonlar yeşil */
+            color: black;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #32CD32; /* Hover'da biraz daha koyu yeşil */
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFFFFF; /* Sonuç yazısı beyaz */
+        }
+
+        /* Alt ortadaki "Günah Çarkı Çevirmek İster misin?" butonunun yerleşimi */
+        #showWheelButton {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #00FF00;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #showWheelButton:hover {
+            background-color: #32CD32;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Günah Çıkarmak İçin Doğru Yerdesiniz</h1>
+    <div class="question">Yılanın başını ezmeye hazır mısınız?</div>
+
+    <button onclick="chooseOption('yes')">Evet</button>
+    <button onclick="chooseOption('no')">Hayır</button>
+
+    <div id="result"></div>
+
+    <!-- Günah Çarkı Gösterme Butonu -->
+    <button id="showWheelButton" onclick="openWheelPage()">Günah Çarkı Çevirmek İster misin?</button>
+
+    <script>
+        function chooseOption(choice) {
+            var resultDiv = document.getElementById('result');
+            if (choice === 'yes') {
+                resultDiv.innerHTML = "Tebrikler, yılanın başını ezdiniz ve günahlarınızdan arındınız!";
+            } else {
+                resultDiv.innerHTML = "Yılan güldü... Belki başka zaman günahlarından arınırsın.";
+            }
+        }
+
+        // Çark sayfasını yeni bir sekmede açma fonksiyonu
+        function openWheelPage() {
+            window.open('wheel.html', '_blank');
+        }
+    </script>
+
+</body>
+</html>

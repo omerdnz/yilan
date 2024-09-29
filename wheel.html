@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Günah Çarkı</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Arka plan siyah */
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* Sol taraftaki günah listesi */
+        #günahListesi {
+            width: 20%;
+            padding: 20px;
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #günahListesi h2 {
+            color: #00FF00;
+            text-align: center;
+        }
+
+        .günah {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        /* Çarkın merkezi */
+        #wheel-container {
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #wheel {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 5px solid #00FF00;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #wheel-segments {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            clip-path: circle(50%);
+            transform: rotate(0deg);
+            transition: transform 3s ease-out; /* Yavaşça durmak için geçiş süresi */
+        }
+
+        /* Her segment 1'den 10'a kadar numaralı olacak */
+        .segment {
+            width: 50%;
+            height: 50%;
+            position: absolute;
+            transform-origin: 100% 100%;
+            clip-path: polygon(100% 50%, 50% 100%, 0 50%, 50% 0);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-weight: bold;
+            font-size: 24px;
+            box-sizing: border-box;
+        }
+
+        /* Çark segmentleri */
+        #segment-1 { transform: rotate(0deg); background-color: #FFD700; }
+        #segment-2 { transform: rotate(36deg); background-color: #FF4500; }
+        #segment-3 { transform: rotate(72deg); background-color: #1E90FF; }
+        #segment-4 { transform: rotate(108deg); background-color: #32CD32; }
+        #segment-5 { transform: rotate(144deg); background-color: #9400D3; }
+        #segment-6 { transform: rotate(180deg); background-color: #FFD700; }
+        #segment-7 { transform: rotate(216deg); background-color: #FF4500; }
+        #segment-8 { transform: rotate(252deg); background-color: #1E90FF; }
+        #segment-9 { transform: rotate(288deg); background-color: #32CD32; }
+        #segment-10 { transform: rotate(324deg); background-color: #9400D3; }
+
+        #spinButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #00FF00;
+            border: none;
+            cursor: pointer;
+            color: black;
+        }
+
+        /* Sağ taraftaki popüler günahlar */
+        #populerGunahlar {
+            width: 20%;
+            padding: 20px;
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #populerGunahlar h2 {
+            color: #00FF00;
+            text-align: center;
+        }
+
+        #populerGunahlar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #populerGunahlar li {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        /* Sonuç mesajının yerleşimi */
+        #resultMessage {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <!-- Sol tarafta sıralı günahlar -->
+        <div id="günahListesi">
+            <h2>Günahlar</h2>
+            <div class="günah">1. Zina</div>
+            <div class="günah">2. Kul Hakkı</div>
+            <div class="günah">3. Saygısızlık</div>
+            <div class="günah">4. Şerefsizlik</div>
+            <div class="günah">5. Hainlik</div>
+            <div class="günah">6. Götlük</div>
+            <div class="günah">7. Puştluk</div>
+            <div class="günah">8. Gıybet</div>
+            <div class="günah">9. Pezoluk</div>
+            <div class="günah">10. Başka Günah Yok</div>
+        </div>
+
+        <!-- Ortada çark -->
+        <div id="wheel-container">
+            <div id="wheel">
+                <div id="wheel-segments">
+                    <div class="segment" id="segment-1">1</div>
+                    <div class="segment" id="segment-2">2</div>
+                    <div class="segment" id="segment-3">3</div>
+                    <div class="segment" id="segment-4">4</div>
+                    <div class="segment" id="segment-5">5</div>
+                    <div class="segment" id="segment-6">6</div>
+                    <div class="segment" id="segment-7">7</div>
+                    <div class="segment" id="segment-8">8</div>
+                    <div class="segment" id="segment-9">9</div>
+                    <div class="segment" id="segment-10">10</div>
+                </div>
+            </div>
+            <button id="spinButton" onclick="spinWheel()">Çevir</button>
+            <div id="resultMessage"></div>
+        </div>
+
+        <!-- Sağ tarafta popüler günahlar -->
+        <div id="populerGunahlar">
+            <h2>Popüler Günahlar</h2>
+            <ul id="populerGunahList">
+                <!-- Rastgele popüler günahlar listesi buraya eklenecek -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const populerGunahlar = [
+            "Yalan", "Hırsızlık", "Dedikodu", "İhanet", "Rüşvet", 
+            "İftira", "Adam Kayırma", "Kibir", "Öfke", "Bağnazlık"
+        ];
+
+        function chooseRandomGunah() {
+            const list = document.getElementById('populerGunahList');
+            list.innerHTML = ''; // Listeyi temizle
+
+            // 5 rastgele popüler günah seç ve listeye ekle
+            for (let i = 0; i < 5; i++) {
+                const randomIndex = Math.floor(Math.random() * populerGunahlar.length);
+                const li = document.createElement('li');
+                li.textContent = populerGunahlar[randomIndex];
+                list.appendChild(li);
+            }
+        }
+
+        // Sayfa yüklendiğinde rastgele popüler günahlar seç
+        window.onload = chooseRandomGunah;
+
+        // Çarkın dönüşünü başlatan fonksiyon
+        function spinWheel() {
+            var wheel = document.getElementById('wheel-segments');
+            var degree = Math.floor(Math.random() * 3600) + 360; // 3600 dereceye kadar rastgele dönüş açısı
+
+            wheel.style.transform = `rotate(${degree}deg)`;
+
+            setTimeout(function() {
+                var selectedSegment = Math.floor((degree % 360) / 36) + 1;
+                document.getElementById('resultMessage').innerHTML = `Bugün bahtınıza ${selectedSegment} numaralı günah çıktı!`;
+            }, 3000); // Çark durunca sonuç gösteriliyor (3 saniye sonra)
+        }
+    </script>
+
+</body>
+</html>
